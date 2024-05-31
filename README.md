@@ -1,7 +1,6 @@
 # Simple Commerce 
 
-Simples aplicação com o objetivo de simular backend de um e-commerce. 
-Composta por três Microsserviços. 
+Simples aplicação composta por três microsserviços para exemplificar um backend de um e-commerce. 
 
 ### Products 
 CRUD de produtos
