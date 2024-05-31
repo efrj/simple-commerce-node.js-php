@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  php_shipping_calculator:
+    build:
+      context: ./shipping_calculator
+    ports:
+      - 8003:8000
+    restart: unless-stopped
+    volumes:
+      - ./shipping_calculator:/app
+    container_name: shipping_calculator_service
+
+  adonis:
+    build:
+      context: ./products
+    ports:
+      - 8001:3333
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    volumes:
+      - ./products:/app
+    container_name: products_api
+  
+  express:
+    build:
+      context: ./orders
+    ports:
+      - 8002:3333
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    volumes:
+      - ./orders:/app
+    container_name: orders_api
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3310:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: products
+    volumes:
+      - ./database/mysql-data:/var/lib/mysql
+      - ./database/scripts:/scripts
+    container_name: products_database
